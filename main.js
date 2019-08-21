@@ -8,6 +8,11 @@ $(function () {
   var btnLIFF = $('#btnLIFF');
   var answer = $('#answer');
 
+  liff.init(function (data) {
+    console.log(data.context.userId);
+    answer.html(answer.html() + '<br>' + data.context.userId);
+  });
+
   var getIrisData = function () {
     iris = sepalLength.val() + ',' + sepalWidth.val() + ',' + petalLength.val() + ',' + petalWidth.val();
     console.log(iris);
@@ -27,5 +32,16 @@ $(function () {
         answer.html(response.result);
       }
     });
+  });
+
+  btnLIFF.click(function () {
+    console.log(answer.html());
+    liff.sendMessages([
+      {
+        type: 'text',
+        text: answer.html(),
+      }
+    ]);
+    liff.closeWindow();
   });
 });
